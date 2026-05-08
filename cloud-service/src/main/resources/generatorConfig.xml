@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 数据库驱动路径，自动找，不用改 -->
+    <classPathEntry location=""/>
+
+    <context id="MysqlContext" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="useLegacyNaming" value="true"/>
+        <!-- 开启乐观锁、时间字段自动填充适配 -->
+        <plugin type="com.baomidou.mybatisplus.generator.engine.MyBatisPlusGenerator"/>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ai_food?serverTimezone=Asia/Shanghai&amp;useSSL=false"
+                        userId="root"
+                        password="admin123">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 实体类生成包路径 -->
+        <javaModelGenerator targetPackage="com.example.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- Mapper XML 生成路径 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- Mapper 接口生成路径 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 你所有表，放开全部生成 -->
+        <table tableName="sw_user" domainObjectName="SwUser"/>
+        <table tableName="sw_merchant" domainObjectName="SwMerchant"/>
+        <table tableName="sw_food" domainObjectName="SwFood"/>
+        <table tableName="sw_cart" domainObjectName="SwCart"/>
+        <table tableName="sw_order" domainObjectName="SwOrder"/>
+        <table tableName="sw_order_item" domainObjectName="SwOrderItem"/>
+        <table tableName="sw_user_address" domainObjectName="SwUserAddress"/>
+    </context>
+</generatorConfiguration>
