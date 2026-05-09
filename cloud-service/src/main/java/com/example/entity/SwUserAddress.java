@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 订单表
+ * 用户收货地址表
  * </p>
  *
  * @author qiuzhuang.wang
@@ -20,52 +19,46 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("sw_order")
-public class SwOrder implements Serializable {
+@TableName("sw_user_address")
+public class SwUserAddress implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 订单ID
-     */
-    @TableId(value = "order_id", type = IdType.AUTO)
-    private Long orderId;
+    @TableId(value = "address_id", type = IdType.AUTO)
+    private Long addressId;
 
-    /**
-     * 订单编号
-     */
-    @TableField("order_no")
-    private String orderNo;
-
-    /**
-     * 用户ID
-     */
     @TableField("user_id")
     private Long userId;
 
     /**
-     * 商户ID
+     * 收货人
      */
-    @TableField("merchant_id")
-    private Long merchantId;
+    @TableField("receiver_name")
+    private String receiverName;
 
     /**
-     * 收货地址ID
+     * 电话
      */
-    @TableField("address_id")
-    private Long addressId;
+    @TableField("receiver_phone")
+    private String receiverPhone;
+
+    @TableField("province")
+    private String province;
+
+    @TableField("city")
+    private String city;
+
+    @TableField("district")
+    private String district;
 
     /**
-     * 总金额
+     * 详细地址
      */
-    @TableField("total_price")
-    private BigDecimal totalPrice;
+    @TableField("detail_address")
+    private String detailAddress;
 
-    /**
-     * 0待付款 1已付款 2已接单 3配送中 4完成 5取消
-     */
-    @TableField("order_status")
-    private Byte orderStatus;
+    @TableField("is_default")
+    private Byte isDefault;
 
     @TableField("create_time")
     private LocalDateTime createTime;

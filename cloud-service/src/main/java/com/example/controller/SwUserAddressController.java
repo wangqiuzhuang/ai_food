@@ -2,31 +2,31 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.service.SwCartService;
-import com.example.entity.SwCart;
+import com.example.service.SwUserAddressService;
+import com.example.entity.SwUserAddress;
 import java.util.List;
 
 /**
  * <p>
- * 购物车表 前端控制器
+ * 用户收货地址表 前端控制器
  * </p>
  *
  * @author qiuzhuang.wang
  * @since 2026-05-09
  */
 @RestController
-@RequestMapping("/swCart")
-public class SwCartController {
+@RequestMapping("/swUserAddress")
+public class SwUserAddressController {
 
     @Autowired
-    private SwCartService swCartService;
+    private SwUserAddressService swUserAddressService;
 
     /**
      * 新增或修改
      */
     @PostMapping("/save")
-    public String save(@RequestBody SwCart entity) {
-        swCartService.saveOrUpdate(entity);
+    public String save(@RequestBody SwUserAddress entity) {
+        swUserAddressService.saveOrUpdate(entity);
         return "操作成功";
     }
 
@@ -35,7 +35,7 @@ public class SwCartController {
      */
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        swCartService.removeById(id);
+        swUserAddressService.removeById(id);
         return "删除成功";
     }
 
@@ -43,15 +43,15 @@ public class SwCartController {
      * 查询所有
      */
     @GetMapping("/list")
-    public List<SwCart> findAll() {
-        return swCartService.list();
+    public List<SwUserAddress> findAll() {
+        return swUserAddressService.list();
     }
 
     /**
      * 根据ID查询
      */
     @GetMapping("/{id}")
-    public SwCart findOne(@PathVariable Long id) {
-        return swCartService.getById(id);
+    public SwUserAddress findOne(@PathVariable Long id) {
+        return swUserAddressService.getById(id);
     }
 }

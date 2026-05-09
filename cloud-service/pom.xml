@@ -9,13 +9,17 @@
         <groupId>com.example</groupId>
         <artifactId>ai_food</artifactId>
         <version>1.0.0</version>
-        <relativePath/>
+        <relativePath>../pom.xml</relativePath>
     </parent>
-
     <artifactId>cloud-service</artifactId>
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>cloud-common</artifactId>
+            <version>1.0.0</version> <!-- 确保版本号一致 -->
+        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -54,6 +58,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
 
         <!-- Lombok -->

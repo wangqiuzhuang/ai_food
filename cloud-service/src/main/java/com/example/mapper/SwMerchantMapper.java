@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author qiuzhuang.wang
- * @since 2026-05-08
+ * @since 2026-05-09
  */
 public interface SwMerchantMapper extends BaseMapper<SwMerchant> {
 
