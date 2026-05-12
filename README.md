@@ -3,6 +3,11 @@
 语言：Java + dart  
 技术栈： spring + springMVC + springBoot + springCloud + mysql + redis  
 # 接口文档：   
+# redis  
+- 查看redis进程 brew services list | grep redis
+- 启动redis  redis-server
+- 命令行界面 redis-cli ping
+
 ## 注册：
 - url: https://localhost:8081/swUser/register  
 - input：{
