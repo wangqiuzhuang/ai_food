@@ -30,4 +30,13 @@ output: {
 	"sysCode": "0000",
 	"sysMessage": "操作成功",
 	"data": "LOGIN_TOKEN:719e7f5b-d5c2-4d41-8c43-b14863207463"
+}  
+## 登出  
+- url: https://localhost:8081/swUser/logout  
+- header中加Authorization字段	25312817-06a4-4517-acae-ddd4051c3b33  
+- {
+	"sysCode": "0000",
+	"sysMessage": "操作成功",
+	"data": "登出成功"
 }
+
