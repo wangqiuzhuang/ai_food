@@ -1,9 +1,15 @@
 package com.example.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.example.service.SwMerchantService;
 import com.example.entity.SwMerchant;
+import com.example.returns.R;
+import com.example.service.SwMerchantService;
+import org.noggit.JSONUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +26,40 @@ public class SwMerchantController {
 
     @Autowired
     private SwMerchantService swMerchantService;
+
+    /**
+     * 查询所有商户
+     */
+    @GetMapping("/list")
+    public R<List<SwMerchant>> findAll() {
+        try {
+            List<SwMerchant> list = StringUtils.isEmpty(swMerchantService.list()) ? new ArrayList<>() : swMerchantService.list();
+            return R.ok(list);
+        }catch(Exception e){
+            return R.error("系统异常");
+        }
+
+
+    }
+
+    /**
+     * 根据ID查询
+     */
+    @GetMapping("/{id}")
+    public R<String> findOne(@PathVariable Long id) {
+        try {
+            Assert.notNull(id,"入参不能为空");
+            SwMerchant merchant = swMerchantService.getById(id);
+            Assert.notNull(merchant,"商户不存在");
+
+            return R.ok(JSONUtil.toJSON(merchant));
+        }catch(Exception e){
+            return R.error("系统异常");
+        }
+    }
+
+
+
 
     /**
      * 新增或修改
@@ -39,19 +79,5 @@ public class SwMerchantController {
         return "删除成功";
     }
 
-    /**
-     * 查询所有
-     */
-    @GetMapping("/list")
-    public List<SwMerchant> findAll() {
-        return swMerchantService.list();
-    }
 
-    /**
-     * 根据ID查询
-     */
-    @GetMapping("/{id}")
-    public SwMerchant findOne(@PathVariable Long id) {
-        return swMerchantService.getById(id);
-    }
 }

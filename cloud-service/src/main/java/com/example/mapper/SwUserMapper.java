@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SwUserMapper extends BaseMapper<SwUser> {
 
+    SwUser findByUserName(String userName);
 }

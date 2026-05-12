@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.SwFoodMapper">
 
+
+    <select id="findFoodByMerchantId" resultType="com.example.entity.SwFood">
+        SELECT * FROM sw_food WHERE merchant_id = #{id}
+    </select>
+
 </mapper>

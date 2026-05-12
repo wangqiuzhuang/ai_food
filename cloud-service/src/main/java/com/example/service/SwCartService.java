@@ -3,6 +3,8 @@ package com.example.service;
 import com.example.entity.SwCart;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 购物车表 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SwCartService extends IService<SwCart> {
 
+    List<SwCart> findByUserId(Long userId);
 }

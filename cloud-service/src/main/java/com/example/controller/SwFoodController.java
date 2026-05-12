@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.returns.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.service.SwFoodService;
@@ -14,12 +16,21 @@ import java.util.List;
  * @author qiuzhuang.wang
  * @since 2026-05-09
  */
+@Slf4j
 @RestController
 @RequestMapping("/swFood")
 public class SwFoodController {
 
     @Autowired
     private SwFoodService swFoodService;
+
+
+    @GetMapping("findFoodByMerchantId/{id}")
+    public R<List<SwFood>> findFoodByMerchantId(@PathVariable Long id) {
+        return R.ok(swFoodService.findFoodByMerchantId(id));
+    }
+
+
 
     /**
      * 新增或修改
@@ -47,11 +58,5 @@ public class SwFoodController {
         return swFoodService.list();
     }
 
-    /**
-     * 根据ID查询
-     */
-    @GetMapping("/{id}")
-    public SwFood findOne(@PathVariable Long id) {
-        return swFoodService.getById(id);
-    }
+
 }

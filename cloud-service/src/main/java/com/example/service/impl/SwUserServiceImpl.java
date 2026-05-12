@@ -4,6 +4,7 @@ import com.example.entity.SwUser;
 import com.example.mapper.SwUserMapper;
 import com.example.service.SwUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SwUserServiceImpl extends ServiceImpl<SwUserMapper, SwUser> implements SwUserService {
 
+
+    @Autowired
+    private SwUserMapper swUserMapper;
+    @Override
+    public SwUser queryByName(String userName) {
+        return swUserMapper.findByUserName(userName);
+    }
 }

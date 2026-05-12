@@ -9,7 +9,12 @@ server:
                 key-alias: tomcat
 
 spring:
-# 数据库配置 + HikariCP连接池
+        config:
+                import: classpath:config.properties
+        autoconfigure:
+                exclude:
+                        - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+                        - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration# 数据库配置 + HikariCP连接池
         datasource:
                 driver-class-name: com.mysql.cj.jdbc.Driver
                 url: jdbc:mysql://localhost:3306/ai_food?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
@@ -19,17 +24,17 @@ spring:
                 host: http://127.0.0.1:8983/solr  # 你的 Solr 服务器地址
                 core: ai_food_core                # 你在 Solr 中创建的 Core 名称
 # Redis
-redis:
-        host: localhost
-        port: 6379
-        database: 0
-        timeout: 10000
-        lettuce:
-                pool:
-                        # 连接池配置（依赖了 commons-pool2 才会生效）
-                        max-active: 8
-                        max-idle: 8
-                        min-idle: 0
+        redis:
+                host: localhost
+                port: 6379
+                database: 0
+                timeout: 10000
+                lettuce:
+                        pool:
+                                # 连接池配置（依赖了 commons-pool2 才会生效）
+                                max-active: 8
+                                max-idle: 8
+                                min-idle: 0
 # MyBatis
 mybatis:
         mapper-locations: classpath:mapper/*.xml

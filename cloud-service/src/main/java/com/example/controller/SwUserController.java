@@ -1,10 +1,24 @@
 package com.example.controller;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.example.service.SwUserService;
+import com.example.VO.Response;
 import com.example.entity.SwUser;
-import java.util.List;
+import com.example.returns.R;
+import com.example.service.SwUserService;
+import com.example.utils.RedisUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * <p>
@@ -14,44 +28,87 @@ import java.util.List;
  * @author qiuzhuang.wang
  * @since 2026-05-09
  */
+@Slf4j
 @RestController
 @RequestMapping("/swUser")
 public class SwUserController {
 
     @Autowired
     private SwUserService swUserService;
+    // 在 Service 或工具类中初始化，也可以注入 Bean
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private RedisUtils redisUtils;
+    @Value("${token.expire:600}")
+    private long tokenExpire;
 
     /**
-     * 新增或修改
+     * 注册
      */
-    @PostMapping("/save")
-    public String save(@RequestBody SwUser entity) {
-        swUserService.saveOrUpdate(entity);
-        return "操作成功";
+    @PostMapping("/register")
+    public R<String> register(@RequestBody SwUser entity) {
+        try {
+            Assert.notNull(entity,"入参不能为空");
+            Assert.notNull(entity.getUserName(),"用户名不能为空");
+            Assert.notNull(entity.getPassword(),"密码不能为空");
+            SwUser swUser = swUserService.queryByName(entity.getUserName());
+            if(Objects.nonNull(swUser)){
+                throw new RuntimeException("用户已存在");
+            }
+            //2. 密码加密 rawPassword: 原始明文密码  encodedPassword: 加密后的哈希值
+            String encodedPassword = passwordEncoder.encode(entity.getPassword());
+            entity.setPassword(encodedPassword);
+            swUserService.save(entity);
+            return R.ok("注册成功");
+        }catch(Exception e){
+            return R.error(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 登录
+     */
+    @PostMapping("/login")
+    public R<String> login(@RequestBody SwUser entity,HttpServletRequest request) {
+        Response response = new Response();
+        try {
+            Assert.notNull(entity,"入参不能为空");
+            Assert.notNull(entity.getUserName(),"用户名不能为空");
+            Assert.notNull(entity.getPassword(),"密码不能为空");
+            Assert.notNull(entity.getUserId(),"用户ID不能为空");
+            SwUser user = swUserService.getById(entity.getUserId());
+            Assert.notNull(user,"用户不存在");
+            String token = StringUtils.isEmpty(request.getHeader("Authorization")) ? "" : request.getHeader("Authorization").trim();
+            String userInfo = redisUtils.getJson("LOGIN_TOKEN:" + token);
+            if(!StringUtils.isEmpty(userInfo)){
+                return R.ok("用户已登陆");
+            }
+            token = UUID.randomUUID().toString();
+            if(passwordEncoder.matches(entity.getPassword(),user.getPassword())){
+                // 登录成功，生成一个随机 UUID 作为 Token
+                // 存入 Redis，设置过期时间为 10 分钟
+                redisUtils.setJson("LOGIN_TOKEN:" + token,user, tokenExpire);
+            }else{
+                throw new RuntimeException("密码错误");
+            }
+            return R.ok("LOGIN_TOKEN:" + token);
+        }catch(Exception e){
+            return R.error(e.getMessage());
+        }
     }
 
     /**
-     * 删除
+     * 登出
      */
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        swUserService.removeById(id);
-        return "删除成功";
-    }
-
-    /**
-     * 查询所有
-     */
-    @GetMapping("/list")
-    public List<SwUser> findAll() {
-        return swUserService.list();
-    }
-
-    /**
-     * 根据ID查询
-     */
-    @GetMapping("/{id}")
-    public SwUser findOne(@PathVariable Long id) {
-        return swUserService.getById(id);
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        if (Objects.nonNull(token)) {
+            // 【核心配合】登出即销毁，拦截器下次校验就会失败
+            redisUtils.delete("LOGIN_TOKEN:" + token);
+        }
+        return R.ok("登出成功");
     }
 }

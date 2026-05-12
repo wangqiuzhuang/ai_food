@@ -3,6 +3,8 @@ package com.example.mapper;
 import com.example.entity.SwCart;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 购物车表 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SwCartMapper extends BaseMapper<SwCart> {
 
+    List<SwCart> findByUserId(Long userId);
 }
