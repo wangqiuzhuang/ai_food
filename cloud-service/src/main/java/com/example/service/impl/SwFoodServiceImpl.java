@@ -30,4 +30,13 @@ public class SwFoodServiceImpl extends ServiceImpl<SwFoodMapper, SwFood> impleme
     public List<SwFood> findFoodByMerchantId(Long id) {
         return swFoodMapper.findFoodByMerchantId(id);
     }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public SwFood findFoodByFoodId(Long id) {
+        return swFoodMapper.findFoodByFoodId(id);
+    }
 }

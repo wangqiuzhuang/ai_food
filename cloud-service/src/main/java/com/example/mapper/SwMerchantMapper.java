@@ -3,6 +3,8 @@ package com.example.mapper;
 import com.example.entity.SwMerchant;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 商户表 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SwMerchantMapper extends BaseMapper<SwMerchant> {
 
+    List<SwMerchant> getMerchantByName(String merchantName);
 }

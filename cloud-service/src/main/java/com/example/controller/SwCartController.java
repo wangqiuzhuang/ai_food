@@ -30,22 +30,25 @@ public class SwCartController {
     @PostMapping("/addCart")
     public R<String> save(@RequestBody SwCart entity) {
         Assert.notNull(entity,"入参不能为空");
+        Assert.notNull(entity.getMerchantId(),"商户ID不能为空");
+        Assert.notNull(entity.getFoodId(),"餐食ID不能为空");
+        Assert.notNull(entity.getUserId(),"用户ID不能为空");
         swCartService.save(entity);
         return R.ok("加购物车成功");
     }
 
-        /**
-     * 根据用户ID查询
+    /**
+     * 根据用户ID查询购物车
      */
-    @GetMapping("/{userId}")
+    @GetMapping("/findByUserId/{userId}")
     public R<List<SwCart>> findOne(@PathVariable Long userId) {
         return R.ok(swCartService.findByUserId(userId));
     }
 
     /**
-     * 删除
+     * 删除 购物车
      */
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public R<String> delete(@PathVariable Long id) {
         try {
             Assert.notNull(id,"入参不能为空");

@@ -16,4 +16,6 @@ import java.util.List;
 public interface SwFoodService extends IService<SwFood> {
 
     List<SwFood> findFoodByMerchantId(Long id);
+
+    SwFood findFoodByFoodId(Long id);
 }

@@ -1,7 +1,9 @@
 package com.example.service;
 
-import com.example.entity.SwOrderItem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.SwOrderItem;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SwOrderItemService extends IService<SwOrderItem> {
 
+    List<SwOrderItem> findOrderItemByOrderId(String orderNo);
 }

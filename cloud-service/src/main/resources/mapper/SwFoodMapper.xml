@@ -6,5 +6,8 @@
     <select id="findFoodByMerchantId" resultType="com.example.entity.SwFood">
         SELECT * FROM sw_food WHERE merchant_id = #{id}
     </select>
+    <select id="findFoodByFoodId" resultType="com.example.entity.SwFood">
+        SELECT * FROM sw_food WHERE food_id = #{id}
+    </select>
 
 </mapper>

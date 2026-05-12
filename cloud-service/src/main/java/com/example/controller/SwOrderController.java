@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.returns.R;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.service.SwOrderService;
@@ -22,36 +24,30 @@ public class SwOrderController {
     private SwOrderService swOrderService;
 
     /**
-     * 新增或修改
+     * 提交订单
      */
     @PostMapping("/save")
-    public String save(@RequestBody SwOrder entity) {
-        swOrderService.saveOrUpdate(entity);
-        return "操作成功";
+    public R<String> save(@RequestBody SwOrder entity) {
+        Assert.notNull(entity,"入参不能为空");
+        swOrderService.save(entity);
+        return R.ok("提交成功");
     }
 
     /**
-     * 删除
+     * 删除订单
      */
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public R<String> delete(@PathVariable Long id) {
         swOrderService.removeById(id);
-        return "删除成功";
+        return R.ok("删除成功");
     }
 
     /**
-     * 查询所有
+     * 查询客户下所有订单
      */
-    @GetMapping("/list")
-    public List<SwOrder> findAll() {
-        return swOrderService.list();
+    @GetMapping("/findByUserId/{userId}")
+    public R<List<SwOrder>> findByUserId(@PathVariable Long userId) {
+        return R.ok(swOrderService.findByUserId(userId));
     }
 
-    /**
-     * 根据ID查询
-     */
-    @GetMapping("/{id}")
-    public SwOrder findOne(@PathVariable Long id) {
-        return swOrderService.getById(id);
-    }
 }

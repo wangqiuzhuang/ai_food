@@ -1,7 +1,9 @@
 package com.example.mapper;
 
-import com.example.entity.SwOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.entity.SwOrder;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SwOrderMapper extends BaseMapper<SwOrder> {
 
+    List<SwOrder> findByUserId(Long userId);
 }
