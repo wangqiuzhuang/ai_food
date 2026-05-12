@@ -39,4 +39,75 @@ output: {
 	"sysMessage": "操作成功",
 	"data": "登出成功"
 }
-
+##  根据商户id查询餐食列表  
+- url: https://localhost:8081/swFood/findFoodByMerchantId/1  
+- output: {
+	"sysCode": "0000",
+	"sysMessage": "操作成功",
+	"data": [
+		{
+			"foodId": 1,
+			"merchantId": 1,
+			"foodName": "burger",
+			"price": 18.32,
+			"stock": 10,
+			"status": 1,
+			"foodImg": "",
+			"createTime": "2026-05-12T14:06:37",
+			"updateTime": "2026-05-12T14:06:37",
+			"jpaVersion": 0
+		}
+	]
+}
+##  查询全部商户列表
+- url: https://localhost:8081/swMerchant/list  
+- output: {
+	"sysCode": "0000",
+	"sysMessage": "操作成功",
+	"data": [
+		{
+			"merchantId": 1,
+			"merchantName": "川菜馆",
+			"phone": "01080588126",
+			"address": "uijeong",
+			"status": 1,
+			"merchantImg": "",
+			"createTime": "2026-05-12T14:14:41",
+			"updateTime": "2026-05-12T14:16:05",
+			"jpaVersion": 0
+		},
+		{
+			"merchantId": 3,
+			"merchantName": "湘菜馆",
+			"phone": "01080588126",
+			"address": "uijeong",
+			"status": 1,
+			"merchantImg": "",
+			"createTime": "2026-05-12T14:16:05",
+			"updateTime": "2026-05-12T14:16:05",
+			"jpaVersion": 0
+		}
+	]
+} 
+##  查询用户下的购物车详情  
+- url:https://localhost:8081/swCart/1
+- output:{
+	"sysCode": "0000",
+	"sysMessage": "操作成功",
+	"data": [
+		{
+			"cartId": 1,
+			"userId": 1,
+			"merchantId": 1,
+			"foodId": 1,
+			"foodNum": 1,
+			"foodPrice": 18.32,
+			"foodImg": "",
+			"foodName": "水煮肉",
+			"selected": 1,
+			"jpaVersion": 0,
+			"createTime": "2026-05-12T14:25:15",
+			"updateTime": "2026-05-12T14:25:15"
+		}
+	]
+}
