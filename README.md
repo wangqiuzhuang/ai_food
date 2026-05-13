@@ -2,7 +2,6 @@
 项目作用：sw项目后端  
 语言：Java + dart  
 技术栈： spring + springMVC + springBoot + springCloud + mysql + redis + junit + 代码覆盖率工具jicoco + 自动化工具
-git token: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
 # 接口文档：   
 # redis  
 - 查看redis进程 brew services list | grep redis
@@ -333,6 +332,9 @@ output: {
 ## solr搜索实现
 ## 支付订单
 ## 订单状态更新
-## 
+## 上传图片
+## AI落地
+## 定时任务
+##
 
 
