@@ -74,7 +74,7 @@
     </dependencies>
 
     <build>
-        <finalName>app</finalName>    ← 加这一行
+        <finalName>app</finalName> 
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

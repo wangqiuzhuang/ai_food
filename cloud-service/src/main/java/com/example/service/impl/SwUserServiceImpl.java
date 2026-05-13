@@ -25,4 +25,13 @@ public class SwUserServiceImpl extends ServiceImpl<SwUserMapper, SwUser> impleme
     public SwUser queryByName(String userName) {
         return swUserMapper.findByUserName(userName);
     }
+
+    /**
+     * @param userName
+     * @return
+     */
+    @Override
+    public SwUser getByUserName(String userName) {
+        return null;
+    }
 }

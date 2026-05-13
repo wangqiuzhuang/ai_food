@@ -78,19 +78,18 @@ public class SwUserController {
             Assert.notNull(entity,"入参不能为空");
             Assert.notNull(entity.getUserName(),"用户名不能为空");
             Assert.notNull(entity.getPassword(),"密码不能为空");
-            Assert.notNull(entity.getUserId(),"用户ID不能为空");
-            SwUser user = swUserService.getById(entity.getUserId());
-            Assert.notNull(user,"用户不存在");
+            SwUser swUser = swUserService.queryByName(entity.getUserName());
+            Assert.notNull(swUser,"用户不存在");
             String token = StringUtils.isEmpty(request.getHeader("Authorization")) ? "" : request.getHeader("Authorization").trim();
             String userInfo = redisUtils.getJson("LOGIN_TOKEN:" + token);
             if(!StringUtils.isEmpty(userInfo)){
                 return R.ok("用户已登陆");
             }
             token = UUID.randomUUID().toString();
-            if(passwordEncoder.matches(entity.getPassword(),user.getPassword())){
+            if(passwordEncoder.matches(entity.getPassword(),swUser.getPassword())){
                 // 登录成功，生成一个随机 UUID 作为 Token
                 // 存入 Redis，设置过期时间为 10 分钟
-                redisUtils.setJson("LOGIN_TOKEN:" + token,user, tokenExpire);
+                redisUtils.setJson("LOGIN_TOKEN:" + token,swUser, tokenExpire);
             }else{
                 throw new RuntimeException("密码错误");
             }
