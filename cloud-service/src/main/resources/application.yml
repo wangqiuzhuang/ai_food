@@ -1,6 +1,5 @@
 server:
         port: 8081
-        # HTTPS 配置 ↓↓↓ 直接加上这一段
 #        ssl:
 #                enabled: true
 #                key-store: classpath:keystore.p12
@@ -10,7 +9,7 @@ server:
 
 spring:
         config:
-                import: classpath:config.properties
+                import: optional:classpath:config.properties
         autoconfigure:
                 exclude:
                         - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
