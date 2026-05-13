@@ -74,10 +74,12 @@
     </dependencies>
 
     <build>
+        <finalName>app</finalName>    ← 加这一行
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.18</version>
                 <configuration>
                     <mainClass>com.example.ServiceApplication</mainClass>
                 </configuration>

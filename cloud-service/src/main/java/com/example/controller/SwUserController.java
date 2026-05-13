@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.VO.Response;
+import com.alibaba.fastjson.JSON;
 import com.example.entity.SwUser;
 import com.example.returns.R;
 import com.example.service.SwUserService;
@@ -48,6 +48,7 @@ public class SwUserController {
      */
     @PostMapping("/register")
     public R<String> register(@RequestBody SwUser entity) {
+        log.info("请求参数：{}", JSON.toJSONString(entity));
         try {
             Assert.notNull(entity,"入参不能为空");
             Assert.notNull(entity.getUserName(),"用户名不能为空");
@@ -72,7 +73,7 @@ public class SwUserController {
      */
     @PostMapping("/login")
     public R<String> login(@RequestBody SwUser entity,HttpServletRequest request) {
-        Response response = new Response();
+        log.info("请求参数：{}", JSON.toJSONString(entity));
         try {
             Assert.notNull(entity,"入参不能为空");
             Assert.notNull(entity.getUserName(),"用户名不能为空");
