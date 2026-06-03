@@ -3,6 +3,10 @@
 <mapper namespace="com.example.mapper.SwMerchantMapper">
 
     <select id="getMerchantByName" resultType="com.example.entity.SwMerchant">
-        SELECT * FROM sw_merchant WHERE merchant_name = #{id}
+        SELECT * FROM sw_merchant WHERE merchant_name = #{merchantName}
+    </select>
+    <select id="findByClass" resultType="com.example.entity.SwMerchant">
+        SELECT * FROM sw_merchant WHERE merchant_class = #{merchantClass}
+
     </select>
 </mapper>

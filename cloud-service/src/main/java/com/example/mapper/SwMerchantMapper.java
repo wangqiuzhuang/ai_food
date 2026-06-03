@@ -16,4 +16,6 @@ import java.util.List;
 public interface SwMerchantMapper extends BaseMapper<SwMerchant> {
 
     List<SwMerchant> getMerchantByName(String merchantName);
+
+    List<SwMerchant> findByClass(Integer merchantClass);
 }
