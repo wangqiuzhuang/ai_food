@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.VO.LoginVO;
 import com.example.entity.SwUser;
 import com.example.returns.R;
 import com.example.service.SwUserService;
@@ -72,7 +73,7 @@ public class SwUserController {
      * 登录
      */
     @PostMapping("/login")
-    public R<String> login(@RequestBody SwUser entity,HttpServletRequest request) {
+    public R<LoginVO> login(@RequestBody SwUser entity, HttpServletRequest request) {
         log.info("请求参数：{}", JSON.toJSONString(entity));
         try {
             Assert.notNull(entity,"入参不能为空");
@@ -83,17 +84,17 @@ public class SwUserController {
             String token = StringUtils.isEmpty(request.getHeader("Authorization")) ? "" : request.getHeader("Authorization").trim();
             String userInfo = redisUtils.getJson("LOGIN_TOKEN:" + token);
             if(!StringUtils.isEmpty(userInfo)){
-                return R.ok("用户已登陆");
+                return R.ok(new LoginVO(swUser.getUserId(), token));
             }
             token = UUID.randomUUID().toString();
             if(passwordEncoder.matches(entity.getPassword(),swUser.getPassword())){
                 // 登录成功，生成一个随机 UUID 作为 Token
                 // 存入 Redis，设置过期时间为 10 分钟
-                redisUtils.setJson("LOGIN_TOKEN:" + token,swUser, tokenExpire);
+                redisUtils.setJson("LOGIN_TOKEN:" + token, swUser, tokenExpire);
             }else{
                 throw new RuntimeException("密码错误");
             }
-            return R.ok("LOGIN_TOKEN:" + token);
+            return R.ok(new LoginVO(swUser.getUserId(), token));
         }catch(Exception e){
             return R.error(e.getMessage());
         }

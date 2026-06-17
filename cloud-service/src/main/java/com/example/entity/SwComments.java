@@ -25,39 +25,27 @@ public class SwComments implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 订单ID
-     */
     @TableId(value = "comment_id", type = IdType.AUTO)
     private Long commentId;
 
-    /**
-     * 订单编号
-     */
     @TableField("food_id")
     private String foodId;
 
-    /**
-     * 用户ID
-     */
     @TableField("user_id")
     private Long userId;
 
-    /**
-     * 商户ID
-     */
     @TableField("merchant_id")
     private Long merchantId;
 
-    /**
-     * 评价详情 
-     */
     @TableField("comment_msg")
     private String commentMsg;
 
-    /**
-     * 星级评价
-     */
+    @TableField("comment_msg_ko")
+    private String commentMsgKo;
+
+    @TableField("comment_msg_cn")
+    private String commentMsgCn;
+
     @TableField("start")
     private BigDecimal start;
 
@@ -67,9 +55,17 @@ public class SwComments implements Serializable {
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-    /**
-     * 乐观锁版本号
-     */
     @TableField("jpa_version")
     private Long jpaVersion;
+
+    /**
+     * 根据语言填充对应文本到 commentMsg
+     */
+    public void applyLang(String lang) {
+        if ("ko".equals(lang) && commentMsgKo != null) {
+            this.commentMsg = commentMsgKo;
+        } else if ("cn".equals(lang) && commentMsgCn != null) {
+            this.commentMsg = commentMsgCn;
+        }
+    }
 }

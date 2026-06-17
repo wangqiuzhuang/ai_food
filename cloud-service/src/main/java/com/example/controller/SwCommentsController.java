@@ -44,15 +44,26 @@ public class SwCommentsController {
      * 查询指定用户发表的全部评价
      */
     @GetMapping("/queryCommentsByUserId/{userId}")
-    public R<List<SwComments>> queryCommentsByUserId(@PathVariable Long userId) {
-        return R.ok(swCommentsService.queryCommentsByUserId(userId));
+    public R<List<SwComments>> queryCommentsByUserId(@PathVariable Long userId,
+                                                     @RequestParam(required = false, defaultValue = "") String lang) {
+        List<SwComments> list = swCommentsService.queryCommentsByUserId(userId);
+        for (SwComments c : list) {
+            c.applyLang(lang);
+        }
+        return R.ok(list);
     }
 
     /**
      * 查询指定商户下指定商品的的全部评价
      */
     @GetMapping("/queryCommentsByFoodIdAndMerchantId/{foodId}/{merchantId}")
-    public R<List<SwComments>> queryCommentsByFoodIdAndMerchantId(@PathVariable Long foodId,@PathVariable Long merchantId) {
-        return R.ok(swCommentsService.queryCommentsByFoodIdAndMerchantId(foodId,merchantId));
+    public R<List<SwComments>> queryCommentsByFoodIdAndMerchantId(@PathVariable Long foodId,
+                                                                  @PathVariable Long merchantId,
+                                                                  @RequestParam(required = false, defaultValue = "") String lang) {
+        List<SwComments> list = swCommentsService.queryCommentsByFoodIdAndMerchantId(foodId, merchantId);
+        for (SwComments c : list) {
+            c.applyLang(lang);
+        }
+        return R.ok(list);
     }
 }

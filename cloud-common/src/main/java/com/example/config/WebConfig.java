@@ -28,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/swUser/login",    // 登录放行
                         "/swUser/register", // 注册放行
+                        "/ai/**",           // AI 代理（客户端调用，无 token）
                         "/static/**",
                         "/error"            // SpringBoot 默认错误页也建议放行
                 );

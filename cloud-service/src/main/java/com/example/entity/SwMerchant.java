@@ -25,61 +25,61 @@ public class SwMerchant implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 商户主键ID
-     */
     @TableId(value = "merchant_id", type = IdType.AUTO)
     private Long merchantId;
 
-    /**
-     * 商户名称
-     */
     @TableField("merchant_name")
     private String merchantName;
 
-    /**
-     * 联系电话
-     */
+    @TableField("merchant_name_ko")
+    private String merchantNameKo;
+
+    @TableField("merchant_name_cn")
+    private String merchantNameCn;
+
     @TableField("phone")
     private String phone;
 
-    /**
-     * 商户地址
-     */
     @TableField("address")
     private String address;
 
-    /**
-     * 状态 1正常 0停业
-     */
+    @TableField("address_ko")
+    private String addressKo;
+
+    @TableField("address_cn")
+    private String addressCn;
+
     @TableField("status")
     private Byte status;
 
-    /**
-     * 商户封面图片URL
-     */
     @TableField("merchant_img")
     private String merchantImg;
 
-    /**
-     * 创建时间
-     */
     @TableField("create_time")
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-    /**
-     * 乐观锁版本号
-     */
     @TableField("jpa_version")
     private Long jpaVersion;
 
     @TableField("merchant_class")
     private  int merchantClass;
 
+    /**
+     * 根据语言填充对应文本到 merchantName/address
+     */
+    public void applyLang(String lang) {
+        if ("ko".equals(lang) && merchantNameKo != null) {
+            this.merchantName = merchantNameKo;
+        } else if ("cn".equals(lang) && merchantNameCn != null) {
+            this.merchantName = merchantNameCn;
+        }
+        if ("ko".equals(lang) && addressKo != null) {
+            this.address = addressKo;
+        } else if ("cn".equals(lang) && addressCn != null) {
+            this.address = addressCn;
+        }
+    }
 }

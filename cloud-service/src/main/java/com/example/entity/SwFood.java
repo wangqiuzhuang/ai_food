@@ -25,63 +25,64 @@ public class SwFood implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 商品主键ID
-     */
     @TableId(value = "food_id", type = IdType.AUTO)
     private Long foodId;
 
-    /**
-     * 关联商户ID
-     */
     @TableField("merchant_id")
     private Long merchantId;
 
-    /**
-     * 食品名称
-     */
     @TableField("food_name")
     private String foodName;
 
-    /**
-     * 售价
-     */
+    @TableField("food_name_ko")
+    private String foodNameKo;
+
+    @TableField("food_name_cn")
+    private String foodNameCn;
+
     @TableField("price")
     private BigDecimal price;
 
-    /**
-     * 库存数量
-     */
     @TableField("stock")
     private Integer stock;
 
-    /**
-     * 状态 1上架 0下架
-     */
     @TableField("status")
     private Byte status;
 
-    /**
-     * 食品商品图片URL
-     */
     @TableField("food_img")
     private String foodImg;
 
-    /**
-     * 创建时间
-     */
     @TableField("create_time")
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-    /**
-     * 乐观锁版本号
-     */
     @TableField("jpa_version")
     private Long jpaVersion;
+
+    @TableField("food_desc")
+    private String foodDesc;
+
+    @TableField("food_desc_ko")
+    private String foodDescKo;
+
+    @TableField("food_desc_cn")
+    private String foodDescCn;
+
+    /**
+     * 根据语言填充对应文本到 foodName/foodDesc
+     */
+    public void applyLang(String lang) {
+        if ("ko".equals(lang) && foodNameKo != null) {
+            this.foodName = foodNameKo;
+        } else if ("cn".equals(lang) && foodNameCn != null) {
+            this.foodName = foodNameCn;
+        }
+        if ("ko".equals(lang) && foodDescKo != null) {
+            this.foodDesc = foodDescKo;
+        } else if ("cn".equals(lang) && foodDescCn != null) {
+            this.foodDesc = foodDescCn;
+        }
+    }
 }

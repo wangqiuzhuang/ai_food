@@ -31,7 +31,8 @@ public class SwMerchantController {
      * 查询所有商户  首页
      */
     @GetMapping("/list")
-    public R<List<SwMerchant>> findByClass(@RequestParam Integer merchantClass) {
+    public R<List<SwMerchant>> findByClass(@RequestParam Integer merchantClass,
+                                           @RequestParam(required = false, defaultValue = "") String lang) {
         List<SwMerchant> list = new ArrayList<>();
         try {
             if(Objects.nonNull(merchantClass)){
@@ -39,49 +40,30 @@ public class SwMerchantController {
             }else{
                 list = StringUtils.isEmpty(swMerchantService.list()) ? new ArrayList<>() : swMerchantService.list();
             }
+            for (SwMerchant m : list) {
+                m.applyLang(lang);
+            }
             return R.ok(list);
         }catch(Exception e){
             return R.error("系统异常");
         }
-
-
     }
-
 
     /**
      * 根据name查询
      */
     @GetMapping("/merchantName")
-    public R<List<SwMerchant>> getMerchantByName(@RequestParam String merchantName) {
+    public R<List<SwMerchant>> getMerchantByName(@RequestParam String merchantName,
+                                                 @RequestParam(required = false, defaultValue = "") String lang) {
         try {
             Assert.notNull(merchantName,"入参不能为空");
             List<SwMerchant> merchant = swMerchantService.getMerchantByName(merchantName);
+            for (SwMerchant m : merchant) {
+                m.applyLang(lang);
+            }
             return R.ok(merchant);
         }catch(Exception e){
             return R.error("系统异常");
         }
     }
-
-
-
-
-//    /**
-//     * 新增或修改
-//     */
-//    @PostMapping("/save")
-//    public String save(@RequestBody SwMerchant entity) {
-//        swMerchantService.saveOrUpdate(entity);
-//        return "操作成功";
-//    }
-//
-//    /**
-//     * 删除
-//     */
-//    @DeleteMapping("/delete/{id}")
-//    public String delete(@PathVariable Long id) {
-//        swMerchantService.removeById(id);
-//        return "删除成功";
-//    }
-//
-
 }
