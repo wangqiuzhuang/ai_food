@@ -1,8 +1,8 @@
-项目名称：ai_food  
-项目作用：sw项目后端   
-访问地址： http://15.165.195.197/ 
-语言：Java + dart  
-技术栈： spring + springMVC + springBoot + springCloud + mysql + redis + junit + 代码覆盖率工具jicoco + 自动化工具
+-- 项目名称：ai_food  
+-- 项目作用：sw项目后端   
+-- 访问地址： http://15.165.195.197/  
+-- 语言：Java + dart   
+-- 技术栈： spring + springMVC + springBoot + springCloud + mysql + redis + junit + 代码覆盖率工具jicoco + 自动化工具  
 # 接口文档：   
 # redis  
 - 查看redis进程 brew services list | grep redis
